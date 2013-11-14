@@ -24,20 +24,6 @@ controllers.gpsCtrl = function ($scope, $http) {
                 {id:"5",firstName:"talya",lastName:"ronen",city:"beer sheva"}];
 
         $scope.addMarker = function (){
-                // $scope.markers.push({
-                //         latitude: parseFloat($scope.markerLat),
-                //         longitude: parseFloat($scope.markerLng)
-                // });
-                        
-                // $scope.markerLat = null;
-                // $scope.markerLng = null;
-
-                //  var marker = new google.maps.Marker({
-                //  position: myLatlng,
-                //  map: map,
-                //  title: 'Hello World!'
-                // });
-
             $http.get('http://localhost:3000/get_reports/').
             success(function(data, status, headers, config) {
                 for (var index=0; index<data.length; index++){
@@ -50,38 +36,6 @@ controllers.gpsCtrl = function ($scope, $http) {
                 }
             });
         }
-
-        // $scope.markers= [{ 
-        //         latitude: 3,
-        //         longitude: 35
-        //          } ,  { 
-        //         latitude: 5,
-        //         longitude: 52
-        //          } ,  { 
-        //         latitude: 3,
-        //         longitude: 12
-        //          } ,  { 
-        //         latitude: 3,
-        //         longitude: 42
-        //          } ,  { 
-        //         latitude: 1,
-        //         longitude: 42
-        //          } ,  { 
-        //         latitude: 0,
-        //         longitude: 42
-        //          } ,  { 
-        //         latitude: 5,
-        //         longitude: 53
-        //          } ,  { 
-        //         latitude: 6,
-        //         longitude: 24
-        //          } ,  { 
-        //         latitude: 7,
-        //         longitude: 19
-        //          } ,  { 
-        //         latitude: 4,
-        //         longitude: 38
-        //          }];
 
         $scope.center= {
                 latitude: 4, // initial map center latitude
