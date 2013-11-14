@@ -1,6 +1,7 @@
-html { height: 100% }
-body { height: 100%; margin: 0; padding: 0 }
-#map-canvas { height: 100% }
+google-map{
+	width: 100%;
+	height: 60em;
+}
 
 div#map-pane {
     width: 250px;    

@@ -1,4 +1,4 @@
-var lbd = angular.module('lbd',[]);
+var lbd = angular.module('lbd',["google-maps"]);
 
 //routes section
 lbd.config(function ($routeProvider) {
@@ -38,6 +38,16 @@ controllers.gpsCtrl = function ($scope) {
                  title: 'Hello World!'
                 });
         }
+
+        angular.extend($scope, {
+            center: {
+                latitude: 4, // initial map center latitude
+                longitude: 23, // initial map center longitude
+            },
+            markers: [], // an array of markers,
+            zoom: 4, // the zoom level
+        });
 };
+
 
 lbd.controller(controllers);
