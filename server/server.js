@@ -15,6 +15,11 @@ var db = require('mongoskin').db('localhost:27017/test');
 // var modReport = mongoose.model('ReportModel'.dataSchema);
 var app = express();
 
+app.configure(function(){
+  app.use('/lbd', express.static("..\\web"));
+  // server.use(express.static(__dirname + '/public'));
+});
+
 app.set('port', process.env.PORT || 3000);
 
 // app.get('/', routes.index);
@@ -30,14 +35,10 @@ http.createServer(app).listen(app.get('port'), function(){
 function get_reports(db) {
     return function(req, res) {
     	//console.log(db.collection('reports').distinct('diag.name'));
-    	db.collection('reports').find().toArray(function(err, result) {
+    	db.collection('reports').find({},{limit:100}).toArray(function(err, result) {
 		    if (err) throw err;
 		    res.send(result);
 		})
-		//var collection = db.get("reports");	  
-	    //collection.find({},{limit:20},function(e,docs){
-	    //	res.json(docs);
-	    //})
     };
 };
 
