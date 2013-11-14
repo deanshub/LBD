@@ -44,17 +44,20 @@ controllers.gpsCtrl = function ($scope, $http) {
              // an array of markers,
         $scope.zoom= 4; // the zoom level
         
-        $scope.conditions = [
-            {id:1, name:"Echola"},
-            {id:2, name:"Aids"}
-        ];
+
+        $http.get("http://localhost:3000/diags").
+        success(function(data, status, headers, config){
+            $scope.conditions= data;
+        });
         
         $scope.sympthoms = [
             {id:1, name:"symp1"},
             {id:2, name:"symp2"}
         ];
 
-        $scope.filter={}
+        $scope.filter={};
+        $scope.filter.dateEnd = new Date();
+        $scope.filter.dateStart = new Date().setMonth($scope.filter.dateEnd.getMonth()-1);
         
         $scope.init = function() {
             $scope.notifications = [];
