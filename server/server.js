@@ -69,6 +69,13 @@ function get_search(db) {
     	if(req.query.sympthom){
     		filter["sympts.type"]=req.query.sympthom;
     	}
+    	if ((req.query.dateStart) && (req.query.dateEnd)) {
+    		filter.date={$gte:new Date(req.query.dateStart),$lte:new Date(req.query.dateEnd)};
+    	} else if(req.query.dateStart) {
+    		filter.date={$gte:new Date(req.query.dateStart)};
+    	} else if(req.query.dateEnd) {
+    		filter.date={$lte:new Date(req.query.dateEnd)};
+    	}
     	
     	db.collection('reports').find(filter,{limit:100}).toArray(function(err, result) {
 		    if (err) throw err;

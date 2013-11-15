@@ -23,6 +23,10 @@ controllers.gpsCtrl = function ($scope, $http) {
                 {id:"4",firstName:"shirit",lastName:"vaxman",city:"rishon le zion"},
                 {id:"5",firstName:"talya",lastName:"ronen",city:"beer sheva"}];
 
+        $scope.clearFields=function(){
+            $scope.filter={};
+        }
+
         $scope.addMarker = function (){
             var url ='http://localhost:3000/search?';
 
