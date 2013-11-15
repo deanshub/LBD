@@ -68,7 +68,8 @@
 			}], 
 			// "rep-by" : "aaa", 
 			age: rand(10, 50), 
-			id: randomString(9) 
+			id: randomString(9),
+			date : new Date(new Date() - rand(0,90000000000))
 		}, function(err, docs) { db.close(); });
 	}
     // var collection = db.collection('blah');
