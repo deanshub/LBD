@@ -22,11 +22,10 @@ app.configure(function(){
 
 app.set('port', process.env.PORT || 3000);
 
-// app.get('/', routes.index);
-// app.get('/users', user.list);
-// app.get('/helloworld', routes.helloworld);
 app.get('/reports', get_reports(db));
 app.get('/diags', get_diags(db));
+app.get('/symps', get_symps(db));
+app.get('/search', get_search(db));
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
@@ -39,7 +38,7 @@ function get_reports(db) {
 		    if (err) throw err;
 		    res.send(result);
 		})
-    };
+    }
 };
 
 function get_diags(db) {
@@ -47,5 +46,33 @@ function get_diags(db) {
     	db.collection('reports').distinct("diag.name", {}, function(err,docs) {
     		res.send(docs);
     	});
-    };
+    }
+};
+
+function get_symps(db) {
+    return function(req, res) {
+    	db.collection('reports').distinct("sympts.type", {}, function(err,docs) {
+    		res.send(docs);
+    	});
+    }
+};
+
+function get_search(db) {
+    return function(req, res) {
+    	var filter={};
+    	if(req.query.ageStart){
+    		filter.age={$gte:parseFloat(req.query.ageStart)};
+    	}
+    	if(req.query.condition){
+    		filter["diag.name"]=req.query.condition;
+    	}
+    	if(req.query.sympthom){
+    		filter["sympts.type"]=req.query.sympthom;
+    	}
+    	
+    	db.collection('reports').find(filter,{limit:100}).toArray(function(err, result) {
+		    if (err) throw err;
+		    res.send(result);
+		});
+    }	
 };

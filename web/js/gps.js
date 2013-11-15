@@ -24,7 +24,33 @@ controllers.gpsCtrl = function ($scope, $http) {
                 {id:"5",firstName:"talya",lastName:"ronen",city:"beer sheva"}];
 
         $scope.addMarker = function (){
-            $http.get('http://localhost:3000/reports/').
+            var url ='http://localhost:3000/search?';
+
+            if($scope.filter.condition){
+                url+="condition=" + $scope.filter.condition + "&";
+            }
+            if($scope.filter.location){
+                url+="location=" + $scope.filter.location + "&";
+            }
+            if($scope.filter.sympthom){
+                url+="sympthom=" + $scope.filter.sympthom + "&";
+            }
+            if($scope.filter.ageStart){
+                url+="ageStart=" + $scope.filter.ageStart + "&";
+            }
+            if($scope.filter.ageEnd){
+                url+="ageEnd=" + $scope.filter.ageEnd + "&";
+            }
+            if($scope.filter.dateStart){
+                url+="dateStart=" + $scope.filter.dateStart + "&";
+            }
+            if($scope.filter.dateEnd){
+                url+="dateEnd=" + $scope.filter.dateEnd + "&";
+            }
+
+
+
+            $http.get(url).
             success(function(data, status, headers, config) {
                 for (var index=0; index<data.length; index++){
                     for (var cord = 0; cord < data[index].coords.length; cord++) {
@@ -35,6 +61,10 @@ controllers.gpsCtrl = function ($scope, $http) {
                     }
                 }
             });
+        }
+
+        $scope.clearMarkers=function(){
+            $scope.markers=[];
         }
 
         $scope.center= {
@@ -50,10 +80,10 @@ controllers.gpsCtrl = function ($scope, $http) {
             $scope.conditions= data;
         });
         
-        $scope.sympthoms = [
-            {id:1, name:"symp1"},
-            {id:2, name:"symp2"}
-        ];
+        $http.get("http://localhost:3000/symps").
+        success(function(data, status, headers, config){
+            $scope.sympthoms= data;
+        });
 
         $scope.filter={};
         $scope.filter.dateEnd = new Date();
